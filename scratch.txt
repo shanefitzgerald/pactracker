@@ -1,0 +1,3 @@
+            	url:"http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
+            	type:'GET',
+            	dataType:"jsonp",

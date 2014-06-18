@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+
+    <title>How to Parse a JSON file using jQuery</title>
+    
+    <style>
+        body{
+            font-family: arial;
+        }
+
+        .button{
+            margin:20px;
+            font-size:16px;
+            font-weight: bold;
+            padding:5px 10px;
+        }
+        #test {
+        	float: left;
+        	border-style: solid 5px;
+        	padding: 10px;
+
+        }
+    </style>
+
+
+</head>
+<body>
+    <a href="data.json" target="_blank">Open JSON file</a><br />
+    <input type="button" value="Get and parse JSON" class="button" />
+    <br />
+    <span id="results"></span>
+
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
+    <script>
+
+        //When DOM loaded we attach click event to button
+        $(document).ready(function() {
+            
+            //after button is clicked we download the data
+            $('.button').click(function(){
+
+                //start ajax request
+            $.ajax({
+                url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
+                    //force to handle it as jsponp by adding callback=
+                dataType: "jsonp",
+                    success: function(data) {
+                    	
+                    // var list = [];
+
+            for (var key in data.results) {
+            	console.log(data.results[key].name)
+                console.log(data.results[key].party)
+    			console.log(data.results[key].begin_cash);
+    			console.log(data.results[key].end_cash)
+    			console.log(data.results[key].total_contributions);
+    			console.log(data.results[key].total_disbursements);
+    			console.log(data.results[key].total_from_individuals);
+    			console.log(data.results[key].total_from_pacs)
+                console.log(data.results[key].date_coverage_from);
+                console.log(data.results[key].date_coverage_to);
+
+          $('#results').append('<div id="test"> Name: ' + data.results[key].name  + '</br>' + 
+           'Party: ' + data.results[key].party +	'</br>' +
+           'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
+           'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
+           'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
+           'Total Disbursements: ' + '$' + data.results[key].end_cash + '</br>' +
+           'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
+           'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
+           'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+
+
+                        
+  					}
+
+                        console.log(data)
+
+                    }
+                });
+
+			
+
+
+            });
+        });
+    </script>
+
+</body>
+</html>
