@@ -42,49 +42,52 @@
             $('.button').click(function(){
 
                 //start ajax request
-            $.ajax({
-                url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
+            	$.ajax({
+                	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
                     //force to handle it as jsponp by adding callback=
-                dataType: "jsonp",
+                	dataType: "jsonp",
                     success: function(data) {
                     	
                     // var list = [];
+            		var contributions = [];
+            		var contributionsDems = 0.0;
+            		var contributionsReps = 0.0;
+            			for (var key in data.results) {
+							$('#results').append('<div id="test"> Name: ' + data.results[key].name  + '</br>' + 
+		           			'Party: ' + data.results[key].party +	'</br>' +
+		           			'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
+		           			'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
+		           			'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
+		           			'Total Disbursements: ' + '$' + data.results[key].end_cash + '</br>' +
+		           			'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
+		           			'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
+		           			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
 
-            for (var key in data.results) {
-            	console.log(data.results[key].name)
-                console.log(data.results[key].party)
-    			console.log(data.results[key].begin_cash);
-    			console.log(data.results[key].end_cash)
-    			console.log(data.results[key].total_contributions);
-    			console.log(data.results[key].total_disbursements);
-    			console.log(data.results[key].total_from_individuals);
-    			console.log(data.results[key].total_from_pacs)
-                console.log(data.results[key].date_coverage_from);
-                console.log(data.results[key].date_coverage_to);
+		          			// console.log(key,data.results[key])
 
-          $('#results').append('<div id="test"> Name: ' + data.results[key].name  + '</br>' + 
-           'Party: ' + data.results[key].party +	'</br>' +
-           'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
-           'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
-           'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
-           'Total Disbursements: ' + '$' + data.results[key].end_cash + '</br>' +
-           'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
-           'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
-           'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+		 					contributions.push(data.results[key].total_contributions);
 
+							// var i = totalContributions++
 
-                        
-  					}
+		          			// var partyColor = data.results[key].party
 
-                        console.log(data)
+		          			// console.log(partyColor)
 
-                    }
+		          			if (data.results[key].party == 'REP') {
+		          				$('#test').css('background-color, red');
+		          				contributionsReps += data.results[key].total_contributions;
+		          				}
+		          			else {
+		          				$('#test').css('background-color, blue');
+		          				contributionsDems += data.results[key].total_contributions;
+		          				}
+
+		          		}
+
+					}
                 });
 
-			
-
-
-            });
+			});
         });
     </script>
 
