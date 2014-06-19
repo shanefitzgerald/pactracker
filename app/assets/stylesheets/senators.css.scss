@@ -1,3 +1,38 @@
-// Place all the styles related to the Senators controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+        body{
+            font-family: arial;
+        }
+
+        .button{
+            margin:20px;
+            font-size:16px;
+            font-weight: bold;
+            padding:5px 10px;
+        }
+        #REP {
+        	float: left;
+        	border: 3px solid black;
+        	padding: 10px;
+            background-color: red;
+        }
+
+        #DEM {
+            float: left;
+            border: 3px solid black;
+            padding: 10px;
+            background-color: blue;
+        }
+
+        .senators {
+        	float: left;
+        	border-style: 5px solid black;
+        	padding: 10px;
+        }
+
+        #twentyTotalPac {
+            height: 600px;
+            overflow: auto;
+        }
+            
+        #sunlightSenatorInfo {
+            background-color: blue;
+        }

@@ -13,6 +13,9 @@ gem 'bootstrap-sass'
 # D3 gem for graphs
 gem 'd3-rails'
 
+# scrolling
+gem 'skrollr-rails'
+
 # Used in rake task
 gem 'httparty'
 
