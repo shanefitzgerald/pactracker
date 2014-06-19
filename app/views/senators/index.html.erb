@@ -19,41 +19,44 @@
         	float: left;
         	border-style: solid 5px;
         	padding: 10px;
+        }
 
+        .test {
+        	float: left;
+        	border-style: solid 5px;
+        	padding: 10px;
         }
     </style>
 
 
 </head>
 <body>
+
     <a href="data.json" target="_blank">Open JSON file</a><br />
     <input type="button" value="Get and parse JSON" class="button" />
     <br />
-    <span id="results"></span>
-
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-
+    <span id="sunlightSenatorInfo"></span>
+    <br />
+    <span id="twentyTotalPac"></span>
     <script>
-
         //When DOM loaded we attach click event to button
         $(document).ready(function() {
-            
+          // This is the var equals total amount donated to candidates   
+          var totalContributionsArray = [];         
             //after button is clicked we download the data
             $('.button').click(function(){
-
                 //start ajax request
             	$.ajax({
                 	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
-                    //force to handle it as jsponp by adding callback=
+                    //force to handle it as jsonp by adding 'callback='
                 	dataType: "jsonp",
-                    success: function(data) {
-                    	
+                    success: function(data) {                    	
                     // var list = [];
             		var contributions = [];
-            		var contributionsDems = 0.0;
-            		var contributionsReps = 0.0;
+            		var contributionsDems = 0;
+            		var contributionsReps = 0;
             			for (var key in data.results) {
-							$('#results').append('<div id="test"> Name: ' + data.results[key].name  + '</br>' + 
+							$('#twentyTotalPac').append('<div id="test"> Name: ' + data.results[key].name  + '</br>' + 
 		           			'Party: ' + data.results[key].party +	'</br>' +
 		           			'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
 		           			'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
@@ -62,31 +65,76 @@
 		           			'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
 		           			'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
 		           			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
-
 		          			// console.log(key,data.results[key])
-
+		          			// push contributions into an array to be used in D3
 		 					contributions.push(data.results[key].total_contributions);
-
-							// var i = totalContributions++
-
-		          			// var partyColor = data.results[key].party
-
-		          			// console.log(partyColor)
-
+		 					// make contributions numbers integers not strings in the array
+		 					totalContributionsArray = contributions.map(function (x) { 
+		 						return parseInt(x); 
+							});
+		 					
+		 					// to set the background-color blue or red depending on 'REP' or 'DEM'
 		          			if (data.results[key].party == 'REP') {
-		          				$('#test').css('background-color, red');
+		          				$('#twentyTotalPac').css('background-color, red');
 		          				contributionsReps += data.results[key].total_contributions;
 		          				}
 		          			else {
-		          				$('#test').css('background-color, blue');
+		          				$('#twentyTotalPac').css('background-color, blue');
 		          				contributionsDems += data.results[key].total_contributions;
-		          				}
+		          				};
 
-		          		}
+
+
+		          				// console.log(contributionsReps);
+		          				// console.log(contributionsDems);
+
+		          		};
+		          		
 
 					}
                 });
+				$.ajax({
+					// make API call to sunlight foundation for senator informtion
+					url: "http://congress.api.sunlightfoundation.com/legislators?chamber=senate&in_office=true&fields=bioguide_id,chamber,contact_form,facebook_id,fec_ids,gender,govtrack_id,first_name,last_name,party,state_name,term_start,term_end,website&per_page=50&apikey=77637d5b5fc2443493837cd2db6e3423&callback=",
+					dataType: 'jsonp',
+					success: function(data) {
+						// console.log(data);
+						for (var key in data.results) {
+							if (data.results != null) {
+								console.log(data.results[key].bioguide_id);
+								console.log(data.results[key].chamber);
+								console.log(data.results[key].contact_form);
+								console.log(data.results[key].facebook_id);
+								console.log(data.results[key].fec_ids);
+								console.log(data.results[key].first_name);
+								console.log(data.results[key].govtrack_id);
+								console.log(data.results[key].last_name);
+								console.log(data.results[key].party);
+								console.log(data.results[key].state_name);
+								console.log(data.results[key].term_end);
+								console.log(data.results[key].term_start);
+								console.log(data.results[key].website);
+								$('#sunlightSenatorInfo').append('<div id="'+ data.results[key].bioguide_id +'" class="test">Name: ' + data.results[key].first_name + ' ' + data.results[key].last_name + '</br>' +
+									'Chamber: ' + data.results[key].chamber + '</br>' +
+									'Party: ' + data.results[key].party + '</br>' +
+									'State: ' + data.results[key].state_name + '</br>' +
+									'Term Start: ' + data.results[key].term_start + '</br>' +
+									'Term End: ' + data.results[key].term_end + '</br>' +
+									'Website: ' + data.results[key].website
+									+ '</div>'
+								
 
+
+
+								)	
+							};
+							
+						};
+					}
+				})
+				setTimeout(function(){
+					console.log(totalContributionsArray)
+				},10000);
 			});
         });
     </script>

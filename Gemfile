@@ -10,6 +10,9 @@ gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'bootstrap-sass'
 
+# D3 gem for graphs
+gem 'd3-rails'
+
 # Used in rake task
 gem 'httparty'
 
