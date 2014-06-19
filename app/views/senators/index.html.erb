@@ -47,7 +47,7 @@
             $('.button').click(function(){
                 //start ajax request
             	$.ajax({
-                	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
+                	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
                     //force to handle it as jsonp by adding 'callback='
                 	dataType: "jsonp",
                     success: function(data) {                    	
@@ -85,12 +85,9 @@
 
 
 
-		          				// console.log(contributionsReps);
-		          				// console.log(contributionsDems);
-
+		          				console.log(contributionsReps);
+		          				console.log(contributionsDems);
 		          		};
-		          		
-
 					}
                 });
 				$.ajax({
@@ -101,19 +98,6 @@
 						// console.log(data);
 						for (var key in data.results) {
 							if (data.results != null) {
-								console.log(data.results[key].bioguide_id);
-								console.log(data.results[key].chamber);
-								console.log(data.results[key].contact_form);
-								console.log(data.results[key].facebook_id);
-								console.log(data.results[key].fec_ids);
-								console.log(data.results[key].first_name);
-								console.log(data.results[key].govtrack_id);
-								console.log(data.results[key].last_name);
-								console.log(data.results[key].party);
-								console.log(data.results[key].state_name);
-								console.log(data.results[key].term_end);
-								console.log(data.results[key].term_start);
-								console.log(data.results[key].website);
 								$('#sunlightSenatorInfo').append('<div id="'+ data.results[key].bioguide_id +'" class="test">Name: ' + data.results[key].first_name + ' ' + data.results[key].last_name + '</br>' +
 									'Chamber: ' + data.results[key].chamber + '</br>' +
 									'Party: ' + data.results[key].party + '</br>' +
@@ -122,10 +106,6 @@
 									'Term End: ' + data.results[key].term_end + '</br>' +
 									'Website: ' + data.results[key].website
 									+ '</div>'
-								
-
-
-
 								)	
 							};
 							
