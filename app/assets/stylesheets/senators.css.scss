@@ -22,17 +22,19 @@
             background-color: blue;
         }
 
-        .senators {
-        	float: left;
-        	border-style: 5px solid black;
-        	padding: 10px;
-        }
-
         #twentyTotalPac {
             height: 600px;
             overflow: auto;
         }
-            
-        #sunlightSenatorInfo {
-            background-color: blue;
+        
+        #senatorPacContainer {
+            height: 650px;
+            overflow: auto;
         }
+
+        .senators {
+            float: left;
+            
+        }
+
+

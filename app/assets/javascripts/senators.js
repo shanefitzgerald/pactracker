@@ -11,13 +11,9 @@ $(document).ready(function() {
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
             //force to handle it as jsonp by adding 'callback='
         	dataType: "jsonp",
-            success: function(data) {                    	
-            // var list = [];
-    			var contributions = [];
-    			var contributionsDems = 0;
-    			var contributionsReps = 0;
+            success: function(data) {                   
     			for (var key in data.results) {
-					$('#twentyTotalPac').append('<div id="' + data.results[key].party + '"> Name: ' + data.results[key].name  + '</br>' + 
+					$('#twentyTotalPac').append('<div id="' + data.results[key].party + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
            			'Party: ' + data.results[key].party +	'</br>' +
            			'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
            			'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
@@ -44,15 +40,12 @@ $(document).ready(function() {
 					pacDonationsArray = pacDonationsArray.map(function (x) {
 						return parseInt(x);
 					});
-          					// console.log(contributionsReps);
-          					// console.log(contributionsDems);
+
           		}
-          							// to set the background-color blue or red depending on 'REP' or 'DEM'
-        			
 
-          				contributionsReps += data.results[key].total_contributions;
-
-          				contributionsDems += data.results[key].total_contributions;
+        			console.log(totalContributionsArray)
+					console.log(individualDonationsArray)
+					console.log(pacDonationsArray)
 			}
 
         });
@@ -82,6 +75,6 @@ $(document).ready(function() {
 			console.log(totalContributionsArray)
 			console.log(individualDonationsArray)
 			console.log(pacDonationsArray)
-		},1000);
+		},10000);
 	});
 });
