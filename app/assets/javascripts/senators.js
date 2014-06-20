@@ -1,6 +1,7 @@
         //When DOM loaded we attach click event to button
 $(document).ready(function() {
   // This is the var equals total amount donated to candidates   
+  var twentyTotalPacSenatorNameArray = [];
   var totalContributionsArray = [];
   var individualDonationsArray = [];
   var pacDonationsArray = [];         
@@ -40,12 +41,23 @@ $(document).ready(function() {
 					pacDonationsArray = pacDonationsArray.map(function (x) {
 						return parseInt(x);
 					});
+					// make an array of the names for use in D3
+					twentyTotalPacSenatorNameArray.push(data.results[key].name);
+					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
+					function toObject(twentyTotalPacSenatorNameArray, totalContributionsArray) {
+					    var result = {};
+					    for (var i = 0; i < twentyTotalPacSenatorNameArray.length; i++)
+					         result[twentyTotalPacSenatorNameArray[i]] = totalContributionsArray[i];
+					    return result;
+					}
+
 
           		}
 
-        			console.log(totalContributionsArray)
-					console.log(individualDonationsArray)
-					console.log(pacDonationsArray)
+          			console.log(twentyTotalPacSenatorNameArray)
+     //    			console.log(totalContributionsArray)
+					// console.log(individualDonationsArray)
+					// console.log(pacDonationsArray)
 			}
 
         });
@@ -57,24 +69,105 @@ $(document).ready(function() {
 				// console.log(data);
 				for (var key in data.results) {
 					if (data.results != null) {
-						$('#sunlightSenatorInfo').append('<div id="'+ data.results[key].bioguide_id +'" class="senators">Name: ' + data.results[key].first_name + ' ' + data.results[key].last_name + '</br>' +
-							'Chamber: ' + data.results[key].chamber + '</br>' +
-							'Party: ' + data.results[key].party + '</br>' +
-							'State: ' + data.results[key].state_name + '</br>' +
-							'Term Start: ' + data.results[key].term_start + '</br>' +
-							'Term End: ' + data.results[key].term_end + '</br>' +
-							'Website: ' + data.results[key].website
-							+ '</div>'
+						$('.sunlightSenatorInfo').append (
+						  '<tr>' +
+							'<td id="bioguide_id" >' + data.results[key].bioguide_id + '</td>' +
+							'<td id="first_name_last_name" >' + data.results[key].first_name + ' ' + data.results[key].last_name + '</td>' +
+							'<td id="chamber" >' + data.results[key].chamber + '</td>'+
+							'<td id="party" >' + data.results[key].party + '</td>' +
+							'<td id="state_name" >' + data.results[key].state_name + '</td>' +
+							'<td id="term_start" >' + data.results[key].term_start + '</td>' +
+							'<td id="term_end" >' + data.results[key].term_end + '</td>' +
+							'<td id="website" >' + data.results[key].website + '</td>' +
+						  '</tr>'
 						)	
 					};
 					
 				};
 			}
 		})
+		$.ajax({
+			// make API call to nytimes to get most recently added commities
+			url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/committees/new.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
+			dataType: 'jsonp',
+			success: function(data) {
+				for (var key in data.results) {
+					if (data.results != null) {
+						// From the json display the name, treasure name, state and link to fec
+						$('#newPacs').append (
+							'<div id="' + data.results[key].id + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
+           					'Treasure: ' + data.results[key].treasurer +	'</br>' +
+           					'State: ' + data.results[key].state + '</br>' +
+           					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
+           					'</div>'
+						)
+					}
+				};
+			}
+		})
+		$.ajax({
+			// make API call to nytimes to get most recent SUPER PACS
+			url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/committees/superpacs.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
+			dataType: 'jsonp',
+			success: function(data) {
+				for (var key in data.results) {
+					if (data.results != null) {
+						// From the json display the name, treasure name, state and link to fec
+						$('#newSuperPacs').append (
+							'<div id="' + data.results[key].id + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
+           					'Treasure: ' + data.results[key].treasurer +	'</br>' +
+           					'State: ' + data.results[key].state + '</br>' +
+           					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
+           					'</div>'
+						)
+					}
+				};
+
+
+				console.log(data);
+			}
+
+		});
 		setTimeout(function(){
-			console.log(totalContributionsArray)
-			console.log(individualDonationsArray)
-			console.log(pacDonationsArray)
+			// console.log(totalContributionsArray)
+			// console.log(individualDonationsArray)
+			// console.log(pacDonationsArray)
+			        // D3 javascript
+        var data = totalContributionsArray
+        var width = 420,
+    		barHeight = 20;
+
+		var x = d3.scale.linear()
+		    .domain([0, d3.max(data)])
+		    .range([0, width]);
+
+		var chart = d3.select(".chart")
+		    .attr("width", width)
+		    .attr("height", barHeight * data.length);
+
+		var bar = chart.selectAll("g")
+		    .data(data)
+		  .enter().append("g")
+		    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+		bar.append("rect")
+		    .attr("width", x)
+		    .attr("height", barHeight - 1);
+
+		bar.append("text")
+		    .attr("x", function(d) { return x(d) - 3; })
+		    .attr("y", barHeight / 2)
+		    .attr("dy", ".35em")
+		    .text(function(d) { return d; });
 		},10000);
 	});
+
+
+
+
+
+
+
+
+
 });

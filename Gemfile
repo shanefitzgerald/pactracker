@@ -13,6 +13,8 @@ gem 'bootstrap-sass'
 # D3 gem for graphs
 gem 'd3-rails'
 
+gem 'underscore-rails'
+
 # scrolling
 gem 'skrollr-rails'
 

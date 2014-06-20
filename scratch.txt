@@ -1,3 +1,21 @@
             	url:"http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback=",
             	type:'GET',
             	dataType:"jsonp",
+
+
+            	http://api.nytimes.com/svc/elections/us/v3/finances/2014/committees/new.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback="
+
+
+
+            								'<div id="' + data.results[key].id + '"> ' 
+								'Pac Name: ' + data.results[key].name + ' <br/>' +
+								'Treasure: ' + data.results[key].treasure + ' <br/>' +
+								'State: ' + data.results[key].state + ' <br/>' +
+								'<a href="' + data.results[key].fec_uri + '">Federal Elections Filings</a>
+							</div>'
+
+
+							http://api.nytimes.com/svc/elections/us/v3/finances/2014/committees/superpacs.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback="
+
+
+		http://api.nytimes.com/svc/elections/us/v3/finances/2014/committees/superpacs.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126&callback="
