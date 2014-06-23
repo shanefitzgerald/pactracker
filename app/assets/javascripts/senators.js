@@ -1,6 +1,7 @@
         //When DOM loaded we attach click event to button
 $(document).ready(function() {
-  // This is the var equals total amount donated to candidates   
+  // This is the var equals total amount donated to candidates
+  var senatorKeyContributions = []   
   var twentyTotalPacSenatorNameArray = [];
   var totalContributionsArray = [];
   var individualDonationsArray = [];
@@ -44,17 +45,12 @@ $(document).ready(function() {
 					// make an array of the names for use in D3
 					twentyTotalPacSenatorNameArray.push(data.results[key].name);
 					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
-					function toObject(twentyTotalPacSenatorNameArray, totalContributionsArray) {
-					    var result = {};
-					    for (var i = 0; i < twentyTotalPacSenatorNameArray.length; i++)
-					         result[twentyTotalPacSenatorNameArray[i]] = totalContributionsArray[i];
-					    return result;
-					}
+					
 
 
           		}
 
-          			console.log(twentyTotalPacSenatorNameArray)
+          			console.log(senatorKeyContributions);
      //    			console.log(totalContributionsArray)
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
@@ -114,7 +110,7 @@ $(document).ready(function() {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
 						$('#newSuperPacs').append (
-							'<div id="' + data.results[key].id + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
+							'<div id="' + data.results[key].id + '" class="section">' + data.results[key].name  + '</br>' + 
            					'Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
