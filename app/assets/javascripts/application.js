@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require underscore
 //= require d3
+//= require jquery.ui.all
+//= require skrollr
 //= require_tree .

@@ -1,41 +1,60 @@
-        body{
-            font-family: arial;
+        #senatorPacContainer {
+            width: 100%;
+            height: 860px;
+            overflow: auto;
+            border: 2px solid black;
+            margin: 0 auto;
+            padding-left: 65px;
+            padding-top: 15px;
+        }
+        #twentyNewestPacsContainer {
+            width: 100%;
+            height: 660px;
+            overflow: auto;
+            border: 2px solid black;
+            margin: 0 auto;
+            padding-left: 65px;
+            padding-top: 15px;
         }
 
-        .button{
+        #REP {
+            float: left;
+            padding: 10px;
+            background-color: red;
+            margin: 10px;
+        }
+
+        #DEM {
+            float: left;
+            padding: 10px;
+            background-color: blue;
+            margin: 10px;
+        }
+
+        .section {
+            float: left;
+            margin: 10px;
+        }
+            
+
+      /*  .button{
             margin:20px;
             font-size:16px;
             font-weight: bold;
             padding:5px 10px;
         }
-        #REP {
-        	float: left;
-        	border: 3px solid black;
-        	padding: 10px;
-            background-color: red;
-        }
 
-        #DEM {
-            float: left;
-            border: 3px solid black;
-            padding: 10px;
-            background-color: blue;
-        }
 
         #twentyTotalPac {
-            height: 600px;
+
             overflow: auto;
         }
         
-        #senatorPacContainer {
-            height: 650px;
-            overflow: auto;
-        }
 
-        .section {
+                .section {
             float: left;
             
-        }
+        }*/
 
         .chart rect {
             fill: steelblue;
@@ -46,5 +65,8 @@
             font: 10px sans-serif;
             text-anchor: end;
         }
+
+
+
 
 

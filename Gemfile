@@ -8,10 +8,12 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
-gem 'bootstrap-sass'
 
+gem "animate-rails"
 # D3 gem for graphs
 gem 'd3-rails'
+
+gem 'jquery-ui-rails'
 
 gem 'underscore-rails'
 
@@ -36,10 +38,6 @@ gem 'active_model_serializers'
 gem 'angularjs-rails'
 
 gem 'angular-rails-templates'
-
-gem 'will_paginate', '~> 3.0.5'
-gem 'betterlorem', '~> 0.1.2'
-gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.

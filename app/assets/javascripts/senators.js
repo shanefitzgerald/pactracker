@@ -1,3 +1,20 @@
+function animationHover(element, animation){
+	element = $(element);
+	element.hover(
+		function() {
+    		element.addClass('animated ' + animation);        
+		},
+		function(){
+    		//wait for animation to finish before removing classes
+    		window.setTimeout( function(){
+        		element.removeClass('animated ' + animation);
+    		}, 2000);        
+});
+
+}
+
+
+
         //When DOM loaded we attach click event to button
 $(document).ready(function() {
   // This is the var equals total amount donated to candidates
@@ -7,7 +24,7 @@ $(document).ready(function() {
   var individualDonationsArray = [];
   var pacDonationsArray = [];         
     //after button is clicked we download the data
-    $('.button').click(function(){
+    // $('.button').click(function(){
         //start ajax request
     	$.ajax({
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
@@ -24,6 +41,7 @@ $(document).ready(function() {
            			'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
            			'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
            			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+					//animation script					
           			// push total contributions into an array to be used in D3
  					totalContributionsArray.push(data.results[key].total_contributions);
  					// make contributions numbers integers not strings in the array totalContributionsArray will be used in D3
@@ -48,12 +66,18 @@ $(document).ready(function() {
 					
 
 
-          		}
+          		}  
 
           			console.log(senatorKeyContributions);
-     //    			console.log(totalContributionsArray)
+     				// console.log(totalContributionsArray)
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
+
+						$('.section').each(function() {
+        					animationHover(this, 'rubberBand');
+    					});
+
+
 			}
 
         });
@@ -119,12 +143,15 @@ $(document).ready(function() {
 					}
 				};
 
-
-				console.log(data);
 			}
 
 		});
+
+
+
+
 		setTimeout(function(){
+
 			// console.log(totalContributionsArray)
 			// console.log(individualDonationsArray)
 			// console.log(pacDonationsArray)
@@ -156,10 +183,10 @@ $(document).ready(function() {
 		    .attr("dy", ".35em")
 		    .text(function(d) { return d; });
 		},10000);
-	});
+	// });
 
 
-
+	
 
 
 
