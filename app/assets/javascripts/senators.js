@@ -8,23 +8,20 @@ function animationHover(element, animation){
     		//wait for animation to finish before removing classes
     		window.setTimeout( function(){
         		element.removeClass('animated ' + animation);
-    		}, 2000);        
+    		}, 2000);   
+    		        					console.log('test');     
 });
 
 }
 
-
-
-        //When DOM loaded we attach click event to button
+//When DOM loaded we attach click event to button
 $(document).ready(function() {
   // This is the var equals total amount donated to candidates
-  var senatorKeyContributions = []   
+  var senatorKeyContributions = [];   
   var twentyTotalPacSenatorNameArray = [];
   var totalContributionsArray = [];
   var individualDonationsArray = [];
   var pacDonationsArray = [];         
-    //after button is clicked we download the data
-    // $('.button').click(function(){
         //start ajax request
     	$.ajax({
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
@@ -32,14 +29,10 @@ $(document).ready(function() {
         	dataType: "jsonp",
             success: function(data) {                   
     			for (var key in data.results) {
-					$('#twentyTotalPac').append('<div id="' + data.results[key].party + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
-           			'Party: ' + data.results[key].party +	'</br>' +
-           			'Starting Cash: ' + '$' + data.results[key].begin_cash + '</br>' +
-           			'Ending Cash: ' + '$' + data.results[key].end_cash + '</br>' +
-           			'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
-           			'Total Disbursements: ' + '$' + data.results[key].end_cash + '</br>' +
-           			'Individual Donations: ' + '$' + data.results[key].total_from_individuals + '</br>' +
-           			'PAC Donations: ' + '$' + data.results[key].total_from_pacs + '</br>' +
+					$('#twentyTotalPac').append('<div id="' + data.results[key].party + '" class="senator">' + data.results[key].name  + '</br>' + 
+           			
+           			'Total Contributions: ' + '$' + data.results[key].total_from_pacs + '</br>' +
+           			
            			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
 					//animation script					
           			// push total contributions into an array to be used in D3
@@ -73,7 +66,109 @@ $(document).ready(function() {
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
 
-						$('.section').each(function() {
+						$('.senator').each(function() {
+        					animationHover(this, 'rubberBand');
+    					});
+
+
+			}
+
+        });
+		   	$.ajax({
+        	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/receipts-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
+            //force to handle it as jsonp by adding 'callback='
+        	dataType: "jsonp",
+            success: function(data) {                   
+    			for (var key in data.results) {
+					$('#twentyTotal').append('<div id="' + data.results[key].party + '" class="senator">' + data.results[key].name  + '</br>' + 
+           			
+           			'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
+           			
+           			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+					//animation script					
+          			// push total contributions into an array to be used in D3
+ 					totalContributionsArray.push(data.results[key].total_contributions);
+ 					// make contributions numbers integers not strings in the array totalContributionsArray will be used in D3
+ 					totalContributionsArray = totalContributionsArray.map(function (x) { 
+ 						return parseInt(x); 
+					});
+					// push total individual donations into an array
+					individualDonationsArray.push(data.results[key].total_from_individuals);
+					// make individual integers and not strings in array
+					individualDonationsArray = individualDonationsArray.map(function (x) {
+						return parseInt(x);
+					});
+					// push total pac donations to a candidate from nytimes api to an array
+					pacDonationsArray.push(data.results[key].total_from_pacs)
+					// make the strings in pacDonationsArray into integers
+					pacDonationsArray = pacDonationsArray.map(function (x) {
+						return parseInt(x);
+					});
+					// make an array of the names for use in D3
+					twentyTotalPacSenatorNameArray.push(data.results[key].name);
+					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
+					
+
+
+          		}  
+
+          			console.log(senatorKeyContributions);
+     				// console.log(totalContributionsArray)
+					// console.log(individualDonationsArray)
+					// console.log(pacDonationsArray)
+
+						$('.senator').each(function() {
+        					animationHover(this, 'rubberBand');
+    					});
+
+
+			}
+
+        });
+		$.ajax({
+        	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/individual-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
+            //force to handle it as jsonp by adding 'callback='
+        	dataType: "jsonp",
+            success: function(data) {                   
+    			for (var key in data.results) {
+					$('#twentyTotalIndividual').append('<div id="' + data.results[key].party + '" class="senator">' + data.results[key].name  + '</br>' + 
+           			
+           			'Total Contributions: ' + '$' + data.results[key].total_from_individuals + '</br>' +
+           			
+           			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+					//animation script					
+          			// push total contributions into an array to be used in D3
+ 					totalContributionsArray.push(data.results[key].total_contributions);
+ 					// make contributions numbers integers not strings in the array totalContributionsArray will be used in D3
+ 					totalContributionsArray = totalContributionsArray.map(function (x) { 
+ 						return parseInt(x); 
+					});
+					// push total individual donations into an array
+					individualDonationsArray.push(data.results[key].total_from_individuals);
+					// make individual integers and not strings in array
+					individualDonationsArray = individualDonationsArray.map(function (x) {
+						return parseInt(x);
+					});
+					// push total pac donations to a candidate from nytimes api to an array
+					pacDonationsArray.push(data.results[key].total_from_pacs)
+					// make the strings in pacDonationsArray into integers
+					pacDonationsArray = pacDonationsArray.map(function (x) {
+						return parseInt(x);
+					});
+					// make an array of the names for use in D3
+					twentyTotalPacSenatorNameArray.push(data.results[key].name);
+					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
+					
+
+
+          		}  
+
+          			console.log(senatorKeyContributions);
+     				// console.log(totalContributionsArray)
+					// console.log(individualDonationsArray)
+					// console.log(pacDonationsArray)
+
+						$('.senator').each(function() {
         					animationHover(this, 'rubberBand');
     					});
 
@@ -115,11 +210,11 @@ $(document).ready(function() {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
 						$('#newPacs').append (
-							'<div id="' + data.results[key].id + '" class="section"> Name: ' + data.results[key].name  + '</br>' + 
+							'<li id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</br>' + 
            					'Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
-           					'</div>'
+           					'</li>'
 						)
 					}
 				};
@@ -134,11 +229,11 @@ $(document).ready(function() {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
 						$('#newSuperPacs').append (
-							'<div id="' + data.results[key].id + '" class="section">' + data.results[key].name  + '</br>' + 
+							'<li id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</br>' + 
            					'Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
-           					'</div>'
+           					'</li>'
 						)
 					}
 				};
@@ -146,9 +241,6 @@ $(document).ready(function() {
 			}
 
 		});
-
-
-
 
 		setTimeout(function(){
 

@@ -1,20 +1,20 @@
+        body {
+           /* background-color: black;*/
+           color: white;
+        }
+
         #senatorPacContainer {
             width: 100%;
             height: 860px;
             overflow: auto;
-            border: 2px solid black;
             margin: 0 auto;
             padding-left: 65px;
             padding-top: 15px;
+            float: left;
         }
+
         #twentyNewestPacsContainer {
-            width: 100%;
-            height: 660px;
-            overflow: auto;
-            border: 2px solid black;
-            margin: 0 auto;
-            padding-left: 65px;
-            padding-top: 15px;
+            float: left;
         }
 
         #REP {
@@ -31,30 +31,10 @@
             margin: 10px;
         }
 
-        .section {
+        .notSection {
             float: left;
             margin: 10px;
         }
-            
-
-      /*  .button{
-            margin:20px;
-            font-size:16px;
-            font-weight: bold;
-            padding:5px 10px;
-        }
-
-
-        #twentyTotalPac {
-
-            overflow: auto;
-        }
-        
-
-                .section {
-            float: left;
-            
-        }*/
 
         .chart rect {
             fill: steelblue;
@@ -64,6 +44,27 @@
             fill: white;
             font: 10px sans-serif;
             text-anchor: end;
+        }
+
+        #about {
+            background-size: cover;
+            background-image: url("http://upload.wikimedia.org/wikipedia/commons/2/27/Capitol_Building_Full_View.jpg");
+        }
+
+        #senator {
+            background-size: cover;
+            background-image: url("http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/111th_US_Senate_class_photo.jpg/1024px-111th_US_Senate_class_photo.jpg");
+        }
+
+        #supreme {
+            background-size: cover;
+            background-image: url("http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Supreme_Court.jpg/800px-Supreme_Court.jpg");
+        }
+
+        .senator {
+            opacity: 0.7;
+            font-weight:bold;
+            border-radius: 25px;
         }
 
 

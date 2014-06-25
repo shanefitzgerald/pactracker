@@ -18,7 +18,6 @@ gem 'jquery-ui-rails'
 gem 'underscore-rails'
 
 # scrolling
-gem 'skrollr-rails'
 
 # Used in rake task
 gem 'httparty'

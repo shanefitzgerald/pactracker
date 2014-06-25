@@ -1,32 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-    <title>How to Parse a JSON file using jQuery</title>
-<!--     <link rel="stylesheet" href="assets/animate.min.css">
-    <script type="text/javascript" src="assets/animation.js"></script> -->
-
-
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href='http://fonts.googleapis.com/css?family=Inika&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<!--     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="animate.css">
+    <script type="text/javascript" src="jquery.fullPage.min.js"></script> -->
+    
 </head>
 <body>
-    <div id="container">
-        <h3>TWENTY SENATORS WHO HAVE RAISED MOST PAC MONEY</h3><br/>
-        <div class="" id="senatorPacContainer">
-            <div id="twentyTotalPac"></div>
+    <div id="fullpage">
+        <div class="section" id="about" data-anchor="slide1">
+            <h1>TITLE</h1>
         </div>
-        <h3>TWENTY NEWEST PACS</h3><br/>
-        <div class="" id="twentyNewestPacsContainer">
-            <div id="newPacs"></div>
+        <div class="section" id="senator" data-anchor="slide2"> 
+            <div class="slide">       
+                <div class="" id="senatorPacContainer">
+                    <h1>Twenty Who Have Recieve the Most PAC Money</h1>
+                    <div id="twentyTotalPac"></div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="" id="senatorPacContainer">
+                    <h1>Twenty Who Have Recieved the Most Total Donations</h1>
+                    <div id="twentyTotal"></div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="" id="senatorPacContainer">
+                    <h1>Twenty Who Have Recieved the Most Total Donations</h1>
+                    <div id="twentyTotalIndividual"></div>
+                </div>
+            </div>
         </div>
-        <h3>TWENTY NEWEST SUPERPACS</h3><br/>
-        <div class="" id="senatorPacContainer">
-            <div id="newSuperPacs"><br/></div>
+        <div class="section" id="supreme" data-anchor="slide3">
+            <h3>The Newest PACS</h3>
+            <div class="" id="twentyNewestPacsContainer">
+                <ul id="newPacs" class="als-wrapper"></ul>
+            </div>
+            <h3>The Newest SuperPacs</h3>
+            <div class="" id="twentyNewestSuperPacsContainer">
+                <ul id="newSuperPacs"></ul>
+            </div>
         </div>
-        <div class="" id="senatorPacContainer">
-            <svg class="chart"></svg>
+        <div class="section" data-anchor="slide4">
+            <div class="slide">
+                <svg class="chart"></svg>
+            </div>
+            <div class="slide"> Slide 2 </div>
+            <div class="slide"> Slide 3 </div>
+            <div class="slide"> Slide 4 </div>
         </div>
-        <!--   <table class="sunlightSenatorInfo"> 
-          </table> -->            
-    </div>     
+    </div>
 </body>
 </html>
