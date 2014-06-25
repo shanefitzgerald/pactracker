@@ -8,7 +8,7 @@
             height: 860px;
             overflow: auto;
             margin: 0 auto;
-            padding-left: 65px;
+            padding-left: 30px;
             padding-top: 15px;
             float: left;
         }
@@ -19,14 +19,14 @@
 
         #REP {
             float: left;
-            padding: 10px;
+            padding: 5px;
             background-color: red;
             margin: 10px;
         }
 
         #DEM {
             float: left;
-            padding: 10px;
+            padding: 5px;
             background-color: blue;
             margin: 10px;
         }
@@ -64,7 +64,12 @@
         .senator {
             opacity: 0.7;
             font-weight:bold;
-            border-radius: 25px;
+            border-radius: 15px;
+        }
+
+        #about {
+            text-align: center;
+            margin: 0px auto;
         }
 
 

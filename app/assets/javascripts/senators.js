@@ -27,34 +27,34 @@ $(document).ready(function() {
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
             //force to handle it as jsonp by adding 'callback='
         	dataType: "jsonp",
-            success: function(data) {                   
-    			for (var key in data.results) {
-					$('#twentyTotalPac').append('<div id="' + data.results[key].party + '" class="senator">' + data.results[key].name  + '</br>' + 
+            success: function(data1) {                   
+    			for (var key in data1.results) {
+					$('#twentyTotalPac').append('<div id="' + data1.results[key].party + '" class="senator">' + data1.results[key].name  + '</br>' + 
            			
-           			'Total Contributions: ' + '$' + data.results[key].total_from_pacs + '</br>' +
+           			'Total Contributions: ' + '$' + data1.results[key].total_from_pacs + '</br>' +
            			
-           			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
+           			'Data1 Coverage Dates: ' + data1.results[key].date_coverage_from + " - " + data1.results[key].date_coverage_to + '</div>')
 					//animation script					
           			// push total contributions into an array to be used in D3
- 					totalContributionsArray.push(data.results[key].total_contributions);
+ 					totalContributionsArray.push(data1.results[key].total_contributions);
  					// make contributions numbers integers not strings in the array totalContributionsArray will be used in D3
  					totalContributionsArray = totalContributionsArray.map(function (x) { 
  						return parseInt(x); 
 					});
 					// push total individual donations into an array
-					individualDonationsArray.push(data.results[key].total_from_individuals);
+					individualDonationsArray.push(data1.results[key].total_from_individuals);
 					// make individual integers and not strings in array
 					individualDonationsArray = individualDonationsArray.map(function (x) {
 						return parseInt(x);
 					});
 					// push total pac donations to a candidate from nytimes api to an array
-					pacDonationsArray.push(data.results[key].total_from_pacs)
+					pacDonationsArray.push(data1.results[key].total_from_pacs)
 					// make the strings in pacDonationsArray into integers
 					pacDonationsArray = pacDonationsArray.map(function (x) {
 						return parseInt(x);
 					});
 					// make an array of the names for use in D3
-					twentyTotalPacSenatorNameArray.push(data.results[key].name);
+					twentyTotalPacSenatorNameArray.push(data1.results[key].name);
 					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
 					
 
@@ -70,6 +70,67 @@ $(document).ready(function() {
         					animationHover(this, 'rubberBand');
     					});
 
+				setTimeout(function(){
+							var r = 800, // setting this up as a "side" for our canvas
+					format = d3.format(",d"), // formats as integer
+					fill = d3.scale.category20c(); // colors by ordinal scale
+
+					var bubble = d3.layout.pack() // pack layout lends to bubble chart
+						.sort(null) // runs a comparator if you want to do some sorting (we aren't here)
+						.size([r, r]) // defaults to 1x1 unless this is specified [x, y]
+						.padding(2); // how much space between each bubble
+
+					var vis = d3.selectAll("#bubblechart").append("svg") // puts a svg inside of the bubblechart div
+						.attr("width", r) // svg canvas is r wide
+						.attr("height", r) // svg canvas is r tall (it's a square)
+						.attr("class", "bubble"); // add class "bubble" to svg 
+
+					var node = vis.selectAll("g.node")  // setting up nodes with a select within the svg we set up when we declared vis above
+						.data(bubble.nodes(classes(data1)) // looks more complex than it is -- we're flattening stuff via bubble (above) and classes (below)
+						.filter(function(d) { return !d.children; }))
+					  .enter().append("g") // g is a D3 thing that groups svg shapes
+					  	 .attr("class", "node")
+					  	 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";  }); // this gives us the spiraling effect of the bubbles by translating the position (x,y) of each next node
+
+
+					  node.append("title") // adds a title attribute to each node -- here, it populates that with the string, "My favorite flavor is ___" and incorporates the flavor of each node 
+					  	.text(function(d) { return "My favorite flavor of ice cream is " + d.candidateName; });
+
+					  node.append("circle") // makes these visuals bubbles
+					  	.attr("r", function(d) { return d.r; }) // sets the radius of each bubble
+					  	.style("fill", function(d) { if(d.candidateParty=="REP") {return fill("red")} else {return fill("blue")} }); // fills the bubble with the color appropriate to the package
+
+					  node.append("text") // add a text label on top of each bubble
+					  	.attr("text-anchor", "middle") // places text in middle of node
+					  	.attr("dy", ".1em") // sizes line height
+					  	.text(function(d) { return d.candidateName;}); // text is equal to name
+
+					  node.append("text") // add a text label on top of each bubble
+					  	.attr("text-anchor", "middle") // places text in middle of node
+					  	.attr("dy", ".9em") // sizes line height
+					  	.text(function(d) { return d.value;}); // text is equal to name
+
+					// Awesome function courtesy of Mike Bostock/Jeff Heer
+					// Returns a flattened hierarchy containing all leaf nodes under the root.
+
+					function classes(root) {
+					      var classes = [];
+
+					      function recurse(item, node) {
+					      	console.log("results");
+					      	// console.log(node.results[key])
+					      	for (var key in node.results) {
+					        if (node.children) node.children.forEach(function(child) { recurse(node.results[key], child); });
+					        else classes.push({candidateParty: node.results[key].party, candidateName: node.results[key].name, value: node.results[key].total_contributions});
+					      }
+					  }
+					      recurse(null, root);
+					      console.log("below this: classes");
+					      console.log(classes);
+					      return {children: classes};
+
+		    }
+				},10000);
 
 			}
 
@@ -117,10 +178,6 @@ $(document).ready(function() {
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
 
-						$('.senator').each(function() {
-        					animationHover(this, 'rubberBand');
-    					});
-
 
 			}
 
@@ -167,10 +224,6 @@ $(document).ready(function() {
      				// console.log(totalContributionsArray)
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
-
-						$('.senator').each(function() {
-        					animationHover(this, 'rubberBand');
-    					});
 
 
 			}

@@ -25,8 +25,8 @@ function animationClick(element, animation){
         });
 }
 
-$(document).ready(function(){
-    $('.section').each(function() {
-        animationHover(this, 'bounce');
-    });
-});
+// $(document).ready(function(){
+//     $('.section').each(function() {
+//         animationHover(this, 'bounce');
+//     });
+// });
