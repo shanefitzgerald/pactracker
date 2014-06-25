@@ -8,20 +8,24 @@ function animationHover(element, animation){
     		//wait for animation to finish before removing classes
     		window.setTimeout( function(){
         		element.removeClass('animated ' + animation);
-    		}, 2000);   
-    		        					console.log('test');     
+    		}, 2000);        
 });
 
 }
 
+var names =[];
+var senatorKeyContributions = []; 
+
 //When DOM loaded we attach click event to button
 $(document).ready(function() {
   // This is the var equals total amount donated to candidates
+  var names =[];
   var senatorKeyContributions = [];   
   var twentyTotalPacSenatorNameArray = [];
   var totalContributionsArray = [];
   var individualDonationsArray = [];
-  var pacDonationsArray = [];         
+  var pacDonationsArray = []; 
+  	
         //start ajax request
     	$.ajax({
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
@@ -61,17 +65,12 @@ $(document).ready(function() {
 
           		}  
 
-          			console.log(senatorKeyContributions);
-     				// console.log(totalContributionsArray)
-					// console.log(individualDonationsArray)
-					// console.log(pacDonationsArray)
-
 						$('.senator').each(function() {
         					animationHover(this, 'rubberBand');
     					});
 
 				setTimeout(function(){
-							var r = 800, // setting this up as a "side" for our canvas
+							var r = 600, // setting this up as a "side" for our canvas
 					format = d3.format(",d"), // formats as integer
 					fill = d3.scale.category20c(); // colors by ordinal scale
 
@@ -88,13 +87,13 @@ $(document).ready(function() {
 					var node = vis.selectAll("g.node")  // setting up nodes with a select within the svg we set up when we declared vis above
 						.data(bubble.nodes(classes(data1)) // looks more complex than it is -- we're flattening stuff via bubble (above) and classes (below)
 						.filter(function(d) { return !d.children; }))
-					  .enter().append("g") // g is a D3 thing that groups svg shapes
+					  	.enter().append("g") // g is a D3 thing that groups svg shapes
 					  	 .attr("class", "node")
 					  	 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";  }); // this gives us the spiraling effect of the bubbles by translating the position (x,y) of each next node
 
 
 					  node.append("title") // adds a title attribute to each node -- here, it populates that with the string, "My favorite flavor is ___" and incorporates the flavor of each node 
-					  	.text(function(d) { return "My favorite flavor of ice cream is " + d.candidateName; });
+					  	.text(function(d) { return d.candidateName; });
 
 					  node.append("circle") // makes these visuals bubbles
 					  	.attr("r", function(d) { return d.r; }) // sets the radius of each bubble
@@ -125,8 +124,8 @@ $(document).ready(function() {
 					      }
 					  }
 					      recurse(null, root);
-					      console.log("below this: classes");
-					      console.log(classes);
+					      // console.log("below this: classes");
+					      // console.log(classes);
 					      return {children: classes};
 
 		    }
@@ -153,12 +152,9 @@ $(document).ready(function() {
  					totalContributionsArray = totalContributionsArray.map(function (x) { 
  						return parseInt(x); 
 					});
-					// push total individual donations into an array
-					individualDonationsArray.push(data.results[key].total_from_individuals);
-					// make individual integers and not strings in array
-					individualDonationsArray = individualDonationsArray.map(function (x) {
-						return parseInt(x);
-					});
+					// push names into empty array
+					names.push(data.results[key].name);
+					
 					// push total pac donations to a candidate from nytimes api to an array
 					pacDonationsArray.push(data.results[key].total_from_pacs)
 					// make the strings in pacDonationsArray into integers
@@ -172,8 +168,36 @@ $(document).ready(function() {
 
 
           		}  
+          		    	var data = {
+												labels : names,
+												datasets : [
+													{
+														fillColor : "rgba(112, 137, 198, 0.8)",
+														strokeColor : "rgba(220,220,220,1)",
+														data : totalContributionsArray
+													},
+												]
+											}
+											//Get context with jQuery - using jQuery's .get() method.
+											var ctx = $("#myChart").get(0).getContext("2d");
+											//This will get the first returned node in the jQuery collection.
+											var myNewChart = new Chart(ctx).Bar(data);
+											console.log(names);
+											console.log(totalContributionsArray)
 
-          			console.log(senatorKeyContributions);
+
+					// var data = {
+					// 	Labels : names,
+					// 	datasets : [
+					// 		{
+					// 			fillColor : "rgba(220,220,220,0.5)",
+					// 			strokeColor : "rgba(220,220,220,1)",
+					// 			data : totalContributionsArray,
+					// 		}
+					// 	]
+					// }
+
+          			
      				// console.log(totalContributionsArray)
 					// console.log(individualDonationsArray)
 					// console.log(pacDonationsArray)
@@ -220,12 +244,6 @@ $(document).ready(function() {
 
           		}  
 
-          			console.log(senatorKeyContributions);
-     				// console.log(totalContributionsArray)
-					// console.log(individualDonationsArray)
-					// console.log(pacDonationsArray) 	
-
-
 			}
 
         });
@@ -262,12 +280,12 @@ $(document).ready(function() {
 				for (var key in data.results) {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
-						$('#newPacs').append (
-							'<h3 id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</h3>' + 
-           					'<div> <p>Treasure: ' + data.results[key].treasurer +	'</br>' +
+						$('#twentyNewestPacsContainer').append (
+							'<div class="pacs"><h3 id="' + data.results[key].id + '">' + data.results[key].name  + '</h3>' + 
+           					'Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
-           					'</p></div>'
+           					'</div>'
 						)
 					}
 				};
@@ -281,9 +299,9 @@ $(document).ready(function() {
 				for (var key in data.results) {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
-						$('#newSuperPacs').append (
-							'<h3 id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</h3>' + 
-           					'<div> <p>Treasure: ' + data.results[key].treasurer +	'</br>' +
+						$('#twentyNewestSuperPacsContainer').append (
+							'<div class="pacs"><h3 id="' + data.results[key].id + '">' + data.results[key].name  + '</h3>' + 
+           					'<p>Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
            					'</p></div>'
@@ -296,6 +314,18 @@ $(document).ready(function() {
 		});
 
 		setTimeout(function(){
+			//marquee for new PACS and Super PACS
+		  	$('#twentyNewestPacsContainer').marquee( {
+		  		direction: 'up',
+		  		duration: 50000,
+		  		duplicated: true,
+		  	});
+		  	
+		  	$('#twentyNewestSuperPacsContainer').marquee( {
+		  		direction: 'up',
+		  		duration: 50000,
+		  		duplicated: true,
+			});
 
 			// console.log(totalContributionsArray)
 			// console.log(individualDonationsArray)
@@ -327,11 +357,14 @@ $(document).ready(function() {
 		    .attr("y", barHeight / 2)
 		    .attr("dy", ".35em")
 		    .text(function(d) { return d; });
-		},10000);
+
+
+
+
+		},9000);
 	// });
 
 
-	
 
 
 

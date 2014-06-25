@@ -78,7 +78,21 @@
         #logo {
             margin-left: -300px;
         }
-
+        #twentyNewestPacsContainer {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border:1px solid #ccc;
+        }
+        #twentyNewestSuperPacsContainer {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border:1px solid #ccc;
+        }
+        .pacs {
+            border: 2px solid white;
+        }
 
 
 
