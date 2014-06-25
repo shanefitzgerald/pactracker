@@ -223,7 +223,7 @@ $(document).ready(function() {
           			console.log(senatorKeyContributions);
      				// console.log(totalContributionsArray)
 					// console.log(individualDonationsArray)
-					// console.log(pacDonationsArray)
+					// console.log(pacDonationsArray) 	
 
 
 			}
@@ -263,11 +263,11 @@ $(document).ready(function() {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
 						$('#newPacs').append (
-							'<li id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</br>' + 
-           					'Treasure: ' + data.results[key].treasurer +	'</br>' +
+							'<h3 id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</h3>' + 
+           					'<div> <p>Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
-           					'</li>'
+           					'</p></div>'
 						)
 					}
 				};
@@ -282,11 +282,11 @@ $(document).ready(function() {
 					if (data.results != null) {
 						// From the json display the name, treasure name, state and link to fec
 						$('#newSuperPacs').append (
-							'<li id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</br>' + 
-           					'Treasure: ' + data.results[key].treasurer +	'</br>' +
+							'<h3 id="' + data.results[key].id + '" class="als-item">' + data.results[key].name  + '</h3>' + 
+           					'<div> <p>Treasure: ' + data.results[key].treasurer +	'</br>' +
            					'State: ' + data.results[key].state + '</br>' +
            					'<span><a href="'  + data.results[key].fec_uri + '">FEC Link</a></span>' +
-           					'</li>'
+           					'</p></div>'
 						)
 					}
 				};
