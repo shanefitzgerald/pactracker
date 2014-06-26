@@ -9,8 +9,9 @@
             overflow: auto;
             margin: 0 auto;
             padding-left: 30px;
-            padding-top: 15px;
+            padding-top: 100px;
             float: left;
+
         }
 
         #twentyNewestPacsContainer {
@@ -48,17 +49,22 @@
 
         #about {
             background-size: cover;
-            background-image: url("http://upload.wikimedia.org/wikipedia/commons/2/27/Capitol_Building_Full_View.jpg");
+            background-image: url("Capitol_Building_Full_View.jpg");
         }
 
         #senator {
             background-size: cover;
-            background-image: url("http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/111th_US_Senate_class_photo.jpg/1024px-111th_US_Senate_class_photo.jpg");
+            background-image: url("1024px-111th_US_Senate_class_photo.jpg");
         }
 
         #supreme {
             background-size: cover;
-            background-image: url("http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Supreme_Court.jpg/800px-Supreme_Court.jpg");
+            background-image: url("800px-Supreme_Court.jpg");
+        }
+
+        #charts {
+            background-size: cover;
+            background-image: url("");
         }
 
         .senator {
@@ -68,15 +74,13 @@
         }
 
         #about {
+            width: 100%;
             text-align: center;
             margin: 0px auto;
         }
 
         #title {
             width: 300px;
-        }
-        #logo {
-            margin-left: -300px;
         }
         #twentyNewestPacsContainer {
             width: 300px;
@@ -92,6 +96,19 @@
         }
         .pacs {
             border: 2px solid white;
+        }
+        #logoContainer {
+
+            width: 610px; 
+            margin-left:480px;
+            overflow: hidden;
+        }
+        #headerContainer {
+
+            width: 900px;
+            margin: 0 auto;
+            text-align: center;
+
         }
 
 

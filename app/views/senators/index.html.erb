@@ -13,24 +13,30 @@
 <body>
     <div id="fullpage">
         <div class="section" id="about" data-anchor="slide1">
-            <h1 id="logo">TITLE</h1>
+            <div id="logoContainer"><h1 id="logo" style="float:left">TRACKING</h1><h1 style="float:right;">THE MONEY</h1></div>
         </div>
         <div class="section" id="senator" data-anchor="slide2"> 
             <div class="slide">       
                 <div class="" id="senatorPacContainer">
-                    <h1>Twenty Who Have Recieve the Most PAC Money</h1>
+                    <div id="headerContainer" >
+                        <h1>Twenty Politicians Who Have Recieve the Most PAC Money</h1>
+                    </div>
                     <div id="twentyTotalPac"></div>
                 </div>
             </div>
             <div class="slide">
                 <div class="" id="senatorPacContainer">
-                    <h1>Twenty Who Have Recieved the Most Total Donations</h1>
+                    <div id="headerContainer" >
+                        <h1>Twenty Who Have Recieved the Most Total Donations</h1>
+                    </div>
                     <div id="twentyTotal"></div>
                 </div>
             </div>
             <div class="slide">
                 <div class="" id="senatorPacContainer">
-                    <h1>Twenty Who Have Recieved the Most Individual Donations</h1>
+                    <div id="headerContainer" >
+                        <h1>Twenty Who Have Recieved the Most Individual Donations</h1>
+                    </div>
                     <div id="twentyTotalIndividual"></div>
                 </div>
             </div>
@@ -44,15 +50,15 @@
                 <h3>The Newest SuperPacs</h3>
             </div>
         </div>
-        <div class="section" data-anchor="slide4">
+        <div class="section" id="charts" data-anchor="slide4">
             <div class="slide">
                 <svg class="chart"></svg>
             </div>
             <div class="slide">   
                 <div id="bubblechart"></div> 
             </div>
-            <div class="slide"><canvas id="myChart" width="1100" height="600"></canvas></div>
-            <div class="slide"> Slide 4 </div>
+            <div class="slide">Bar Chart<canvas id="myChart" width="1100" height="600"></canvas></div>
+            <div class="slide">Pie Chart<canvas id="myPieChart" width="1100" height="600"></div>
         </div>
     </div>
 </body>

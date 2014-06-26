@@ -12,13 +12,11 @@ function animationHover(element, animation){
 });
 
 }
-
-var names =[];
-var senatorKeyContributions = []; 
-
 //When DOM loaded we attach click event to button
 $(document).ready(function() {
   // This is the var equals total amount donated to candidates
+  var demArray = [];
+  var repArray = [];
   var names =[];
   var senatorKeyContributions = [];   
   var twentyTotalPacSenatorNameArray = [];
@@ -138,15 +136,23 @@ $(document).ready(function() {
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/receipts-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
             //force to handle it as jsonp by adding 'callback='
         	dataType: "jsonp",
-            success: function(data) {                   
+          success: function(data) {                   
     			for (var key in data.results) {
 					$('#twentyTotal').append('<div id="' + data.results[key].party + '" class="senator">' + data.results[key].name  + '</br>' + 
            			
            			'Total Contributions: ' + '$' + data.results[key].total_contributions + '</br>' +
            			
            			'Data Coverage Dates: ' + data.results[key].date_coverage_from + " - " + data.results[key].date_coverage_to + '</div>')
-					//animation script					
-          			// push total contributions into an array to be used in D3
+					
+					if (data.results[key].party == "REP") {
+						repArray.push(data.results[key].total_contributions);
+ 					} else {
+						demArray.push(data.results[key].total_contributions);
+ 					}
+ 					demArray = demArray.map(function (x) { 
+ 						return parseInt(x); 
+ 					});
+          // push total contributions into an array to be used in D3
  					totalContributionsArray.push(data.results[key].total_contributions);
  					// make contributions numbers integers not strings in the array totalContributionsArray will be used in D3
  					totalContributionsArray = totalContributionsArray.map(function (x) { 
@@ -164,16 +170,36 @@ $(document).ready(function() {
 					// make an array of the names for use in D3
 					twentyTotalPacSenatorNameArray.push(data.results[key].name);
 					// combining twentyTotalPacSenatorNameArray with totalContributionsArray for D3
-					
+          }
+          // sum the array of Dems
+ 					var myData = new Array(demArray);
 
+					var demSum = myData.reduce(function (a, b) {
+					    return a + b[1];
+					}, 0);
+ 					repArray = repArray.map(function (x) { 
+ 						return parseInt(x); 
+ 					});
+ 					// sum the array of Reps
+ 					var myData = new Array(repArray);
 
-          		}  
+					var repSum = myData.reduce(function (a, b) {
+					    return a + b[1];
+					}, 0);
+ 					repArray = repArray.map(function (x) { 
+ 						return parseInt(x); 
+ 					});
+          console.log(repSum);
+          console.log(demSum);
+          					// chart.js function to make bar graph of senators and their total contributions  
           		    	var data = {
+          		    			// names comes from api call and array built line 162
 												labels : names,
 												datasets : [
 													{
 														fillColor : "rgba(112, 137, 198, 0.8)",
 														strokeColor : "rgba(220,220,220,1)",
+														// totalContributionsArray comes from api call and array built line 171
 														data : totalContributionsArray
 													},
 												]
@@ -182,8 +208,22 @@ $(document).ready(function() {
 											var ctx = $("#myChart").get(0).getContext("2d");
 											//This will get the first returned node in the jQuery collection.
 											var myNewChart = new Chart(ctx).Bar(data);
-											console.log(names);
-											console.log(totalContributionsArray)
+
+										// chart.js function to make pie chart of REP vs DEM total donations 
+
+
+										var data = [
+											{
+												value: repSum,
+												color:"rgba(255, 0, 0, 0.8)"
+											},
+											{
+												value : demSum,
+												color : "rgba(0,0,255, 0.8)"
+											},	
+										]
+											var ctx2 = $('#myPieChart').get(0).getContext("2d");
+											var myNewChart2 = new Chart(ctx2).Pie(data);
 
 
 					// var data = {
@@ -203,9 +243,10 @@ $(document).ready(function() {
 					// console.log(pacDonationsArray)
 
 
-			}
+			
 
-        });
+        	}
+      	});
 		$.ajax({
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/individual-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
             //force to handle it as jsonp by adding 'callback='
