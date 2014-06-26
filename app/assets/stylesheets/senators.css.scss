@@ -37,6 +37,10 @@
             margin: 10px;
         }
 
+        .chart {
+            margin-left: 400px;
+        }
+
         .chart rect {
             fill: steelblue;
         }
@@ -45,6 +49,7 @@
             fill: white;
             font: 10px sans-serif;
             text-anchor: end;
+
         }
 
         #about {
@@ -58,13 +63,14 @@
         }
 
         #supreme {
+            margin: 0 auto;
             background-size: cover;
             background-image: url("800px-Supreme_Court.jpg");
         }
 
         #charts {
             background-size: cover;
-            background-image: url("");
+            background: rgba(165, 111, 76, 1);
         }
 
         .senator {
@@ -87,20 +93,23 @@
             height: 300px;
             overflow: hidden;
             border:1px solid #ccc;
+            margin-left: 300px;
         }
         #twentyNewestSuperPacsContainer {
             width: 300px;
             height: 300px;
             overflow: hidden;
             border:1px solid #ccc;
+            margin-left: 600px;
         }
         .pacs {
             border: 2px solid white;
         }
         #logoContainer {
-
-            width: 610px; 
-            margin-left:480px;
+            position: fixed;
+            width: 640px; 
+            margin-left:630px;
+            margin-bottom: 40px;
             overflow: hidden;
         }
         #headerContainer {
@@ -109,6 +118,38 @@
             margin: 0 auto;
             text-align: center;
 
+        }
+        #scrollerContainer {
+            width: 900px;
+        }
+        #bubblechart {
+            margin-left: 400px;
+        }
+
+        #pieContainer {
+            height: 100%;
+            width: 1400px;
+            border: 2px solid black;
+        }
+        #total {
+            height: 300px;
+            width: 280px;
+            border: 2px solid black;
+            float: right;
+        }
+        #demTotal {
+            padding: 10px;
+            height: 100px;
+            width: 220px;
+            border: 2px solid blue;
+            margin: 10px;
+        }
+        #repTotal {
+            padding: 10px;
+            height: 100px;
+            width: 220px;
+            border: 2px solid blue;
+            margin: 10px;
         }
 
 

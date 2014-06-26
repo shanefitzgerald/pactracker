@@ -42,12 +42,14 @@
             </div>
         </div>
         <div class="section" id="supreme" data-anchor="slide3">
-            <div class="" id="twentyNewestPacsContainer">
-                <h3 id="title">The Newest PACS</h3>
-            </div>
-            
-            <div class="" id="twentyNewestSuperPacsContainer">
-                <h3>The Newest SuperPacs</h3>
+            <div id="scrollerContainer">
+                <div class="" id="twentyNewestPacsContainer">
+                    <h3 id="title">The Newest PACS</h3>
+                </div>
+                
+                <div class="" id="twentyNewestSuperPacsContainer">
+                    <h3>The Newest SuperPacs</h3>
+                </div>
             </div>
         </div>
         <div class="section" id="charts" data-anchor="slide4">
@@ -57,9 +59,23 @@
             <div class="slide">   
                 <div id="bubblechart"></div> 
             </div>
-            <div class="slide">Bar Chart<canvas id="myChart" width="1100" height="600"></canvas></div>
-            <div class="slide">Pie Chart<canvas id="myPieChart" width="1100" height="600"></div>
+            <div class="slide">
+                <canvas id="myChart" width="1100" height="600"></canvas>
+            </div>
+            <div class="slide">
+                <div id="pieContainer">
+                    <div id="total">
+                        <div id="demTotal">
+                            
+                        </div>
+                        <div id="repTotal">
+                            
+                        </div>
+                    </div> 
+                    <canvas id="myPieChart" width="1100" height="600"></canvas>
+
+                </div>
+            </div>
         </div>
-    </div>
 </body>
 </html>

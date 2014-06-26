@@ -29,7 +29,7 @@ $(document).ready(function() {
         	url: "http://api.nytimes.com/svc/elections/us/v3/finances/2014/candidates/leaders/pac-total.json?api-key=c353cbc0ae7d858a504f6ed663c0a326:5:69483126",
             //force to handle it as jsonp by adding 'callback='
         	dataType: "jsonp",
-            success: function(data1) {                   
+          success: function(data1) {                   
     			for (var key in data1.results) {
 					$('#twentyTotalPac').append('<div id="' + data1.results[key].party + '" class="senator">' + data1.results[key].name  + '</br>' + 
            			
@@ -189,6 +189,11 @@ $(document).ready(function() {
  					repArray = repArray.map(function (x) { 
  						return parseInt(x); 
  					});
+ 						$('demTotal').append('<h3>Democrats Total: $' + demSum + '</h3>');
+						$('repTotal').append('<h3 style="color: black;">Republican Total: $'+ repSum + '</h3>');
+						console.log(repSum)
+										
+
           console.log(repSum);
           console.log(demSum);
           					// chart.js function to make bar graph of senators and their total contributions  
@@ -224,6 +229,8 @@ $(document).ready(function() {
 										]
 											var ctx2 = $('#myPieChart').get(0).getContext("2d");
 											var myNewChart2 = new Chart(ctx2).Pie(data);
+
+										// jquery append to the "scoreboard on pie chart view"
 
 
 					// var data = {
